@@ -1,7 +1,5 @@
 import React from "react";
 
-
-import anuj from "../assets/anuj.jpg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Table,
@@ -20,7 +18,7 @@ const employees = [
     jobTitle: "Full stack Developer",
     department: "Manager",
    
-    avatarSrc: anuj,
+    avatarSrc: "https://github.com/shadcn.png",
   },
   {
     name: "John Doe",
@@ -81,7 +79,7 @@ const Usertable = () => {
               <TableCell>{employee.department}</TableCell>
               <TableCell className="text-right space-x-2">
                 <Button>Profile</Button>
-                <Button variant=''>payment</Button>
+                <Button >payment</Button>
               </TableCell>
             </TableRow>
           ))}
