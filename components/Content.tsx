@@ -1,4 +1,6 @@
 // components/Content.js
+
+'use client'
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Usertable from './Usertable';
@@ -12,7 +14,7 @@ const Content = () => {
             <CardTitle>Total Employees</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-3xl font-bold'>100</p>
+            <p className='text-3xl '>100</p>
           </CardContent>
         </Card>
         <Card className='text-center dark:hover:bg-slate-900 hover:bg-slate-300'>
