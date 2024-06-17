@@ -126,7 +126,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({ e
   const [paymentRecords, setPaymentRecords] = useState<PaymentRecord[]>([
     { date: "2024-01-15", amount: "$5,000", method: "Bank Transfer", status: "Completed" },
     { date: "2024-02-15", amount: "$5,000", method: "Bank Transfer", status: "Completed" },
-    
+    // Add more initial payment records as needed
   ]);
 
   const [newPayment, setNewPayment] = useState<PaymentRecord>({
@@ -175,7 +175,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({ e
         </div>
         <div className="w-full mt-4 space-y-2">
           <h2 className="text-lg mb-2 text-black dark:text-white">Add Payment</h2>
-          <Input name="date" value={newPayment.date}  type="date"  onChange={handleChange} placeholder="Date" />
+          <Input name="date" type="date" value={newPayment.date} onChange={handleChange} placeholder="Date" />
           <Input name="amount" value={newPayment.amount} onChange={handleChange} placeholder="Amount" />
           <Input name="method" value={newPayment.method} onChange={handleChange} placeholder="Method" />
           <Button onClick={addPayment}>Add Payment</Button>
@@ -241,8 +241,9 @@ const Usertable: React.FC = () => {
                 </Avatar>
                 <span>{employee.name}</span>
               </TableCell>
-              <TableCell>{employee.jobTitle}</TableCell>
-              <TableCell>{employee.department}</TableCell>
+              <TableCell className="hidden sm:table-cell">{employee.jobTitle}</TableCell>
+              <TableCell className="hidden md:table-cell">{employee.department}</TableCell>
+             
               <TableCell className="text-right space-x-2">
                 <Button onClick={() => openProfile(employee)}>Profile</Button>
                 <Button onClick={() => openPayment(employee)}>Payment</Button>
