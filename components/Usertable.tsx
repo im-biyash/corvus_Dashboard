@@ -321,12 +321,12 @@ const Usertable: React.FC = () => {
 
   return (
     <div className="p-3">
-      <Table className="">
+      <Table className="w-full">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="lg:visible sm:hidden">Department</TableHead>
-            <TableHead className="hidden sm:table-cell">Job Title</TableHead>
+            <TableHead className="">job title</TableHead>
+            <TableHead className="hidden sm:table-cell">Department</TableHead>
             <TableHead className="text-right mr-5">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -340,11 +340,11 @@ const Usertable: React.FC = () => {
                 </Avatar>
                 <span>{employee.name}</span>
               </TableCell>
-              <TableCell className="">{employee.department}</TableCell>
+              <TableCell className="">{employee.jobTitle}</TableCell>
               <TableCell className="hidden sm:table-cell">
-                {employee.jobTitle}
+                {employee.department}
               </TableCell>
-              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 items ">
+              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 item ">
                 <Button onClick={() => openProfile(employee)}>Profile</Button>
                 <Button onClick={() => openPayment(employee)}>Payment</Button>
               </TableCell>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserItem from "./userItem";
 import {
   Command,
@@ -11,19 +11,39 @@ import {
 } from "@/components/ui/command";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FaUser } from "react-icons/fa";
+import { RiPresentationFill } from "react-icons/ri";
 import { BiChevronDown, BiChevronUp, BiMenu } from "react-icons/bi";
+import { TbBrandPaypay } from "react-icons/tb";
+import { TbReportMoney } from "react-icons/tb";   
 
 const Sidebar = () => {
   const [isEmployeeDropdownOpen, setIsEmployeeDropdownOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to track sidebar open/close
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
 
+  
   const toggleEmployeeDropdown = () => {
     setIsEmployeeDropdownOpen(!isEmployeeDropdownOpen);
   };
 
-  const toggleSidebar = () => {
+  const toggleSidebar = () => { 
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarOpen(window.innerWidth >= 768); 
+    };
+
+    handleResize(); 
+
+    window.addEventListener("resize", handleResize); 
+
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div
@@ -33,7 +53,7 @@ const Sidebar = () => {
     >
       <div>
         {isSidebarOpen && <UserItem />}{" "}
-        {/* Render UserItem only when sidebar is open */}
+       
       </div>
       <div>
         <Command>
@@ -53,11 +73,11 @@ const Sidebar = () => {
             >
               {isSidebarOpen && (
                 <>
-                  <div className="dark:hover:bg-slate-600">
+                  <div className="">
                     <div className="flex items-center ml-6 relative">
                       <LuLayoutDashboard />
                       <BiMenu
-                        className="cursor-pointer absolute top-0 right-0 mt-1 mr-2"
+                        className="cursor-pointer absolute top-0 right-0 mt-1 mr-2 hover:bg-slate-600"
                         onClick={toggleSidebar}
                       />
                       <CommandItem className="font-bold text-xl text-center">
@@ -104,17 +124,19 @@ const Sidebar = () => {
                   )}
                   <div className="dark:hover:bg-slate-600 hover:bg-slate-300">
                     <div className="flex items-center ml-8 text-xl p-1">
+                    <RiPresentationFill />
                       <CommandItem>Attendance</CommandItem>
                     </div>
                   </div>
-                  <div className="hover:bg-slate-300 dark:hover:bg-Slate-600 ">
+                  <div className="dark:hover:bg-slate-600 hover:bg-slate-300 ">
                     <div className="flex items-center ml-8 text-xl p-1 ">
-                      <FaUser />
+                    <TbBrandPaypay />
                       <CommandItem>Payroll</CommandItem>
                     </div>
                   </div>
-                  <div className="dark:*:hover:bg-slate-600 hover:bg-slate-300">
+                  <div className="dark:hover:bg-slate-600 hover:bg-slate-300">
                     <div className="flex items-center ml-8 text-xl p-1">
+                    <TbReportMoney />
                       <CommandItem>Payment</CommandItem>
                     </div>
                   </div>
