@@ -21,8 +21,7 @@ const Navbar = () => {
       </div>
       <div className="flex-grow flex justify-center">
         <ul className="flex gap-3 p-2 font-semibold">
-          <li>Home</li>
-          <li>About</li>
+          
           <li>Contact</li>
           <li>Blog</li>
         </ul>
