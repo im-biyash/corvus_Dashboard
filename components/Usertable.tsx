@@ -325,7 +325,7 @@ const Usertable: React.FC = () => {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="">job title</TableHead>
+            <TableHead className="hidden sm:table-cell">job title</TableHead>
             <TableHead className="hidden sm:table-cell">Department</TableHead>
             <TableHead className="text-right mr-5">Actions</TableHead>
           </TableRow>
@@ -340,7 +340,7 @@ const Usertable: React.FC = () => {
                 </Avatar>
                 <span>{employee.name}</span>
               </TableCell>
-              <TableCell className="">{employee.jobTitle}</TableCell>
+              <TableCell className="hidden sm:table-cell">{employee.jobTitle}</TableCell>
               <TableCell className="hidden sm:table-cell">
                 {employee.department}
               </TableCell>
