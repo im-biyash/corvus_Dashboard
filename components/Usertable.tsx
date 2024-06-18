@@ -1,7 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; // Assuming there's an Input component
 
@@ -45,7 +52,8 @@ const initialEmployees: Employee[] = [
     department: "IT",
     salary: "$100,000",
     paymentInfo: "Bank Account - XXXX5678",
-    avatarSrc: "https://avatars.design/wp-content/uploads/2022/09/5business-team-employee-personal-avatar.png",
+    avatarSrc:
+      "https://avatars.design/wp-content/uploads/2022/09/5business-team-employee-personal-avatar.png",
   },
   {
     name: "Jane Smith",
@@ -56,7 +64,8 @@ const initialEmployees: Employee[] = [
     department: "Design",
     salary: "$90,000",
     paymentInfo: "Bank Account - XXXX9012",
-    avatarSrc: "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1718183707~exp=1718187307~hmac=3900846836b9d435f655d19d1cd0379b4350cbacdcf3bcda9fec5befdc3335cb&w=740",
+    avatarSrc:
+      "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1718183707~exp=1718187307~hmac=3900846836b9d435f655d19d1cd0379b4350cbacdcf3bcda9fec5befdc3335cb&w=740",
   },
   {
     name: "Emily Johnson",
@@ -78,11 +87,16 @@ const initialEmployees: Employee[] = [
     department: "Sales",
     salary: "$110,000",
     paymentInfo: "Bank Account - XXXX7890",
-    avatarSrc: "https://media.istockphoto.com/id/1476170969/photo/portrait-of-young-man-ready-for-job-business-concept.jpg?s=2048x2048&w=is&k=20&c=yif473DFhN451o-tNC1tASFFoP5QTOYcqS26dhEbv6U=",
+    avatarSrc:
+      "https://media.istockphoto.com/id/1476170969/photo/portrait-of-young-man-ready-for-job-business-concept.jpg?s=2048x2048&w=is&k=20&c=yif473DFhN451o-tNC1tASFFoP5QTOYcqS26dhEbv6U=",
   },
 ];
 
-const ProfileModal: React.FC<{ employee: Employee; onClose: () => void; onSave: (updatedEmployee: Employee) => void }> = ({ employee, onClose, onSave }) => {
+const ProfileModal: React.FC<{
+  employee: Employee;
+  onClose: () => void;
+  onSave: (updatedEmployee: Employee) => void;
+}> = ({ employee, onClose, onSave }) => {
   const [editEmployee, setEditEmployee] = useState<Employee>({ ...employee });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,23 +112,67 @@ const ProfileModal: React.FC<{ employee: Employee; onClose: () => void; onSave: 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="p-4 bg-white dark:bg-[#0a192f] rounded-lg w-[500px] h-auto flex flex-col items-center">
-        <h1 className="text-xl mb-4 text-black dark:text-white">Edit Profile</h1>
+        <h1 className="text-xl mb-4 text-black dark:text-white">
+          Edit Profile
+        </h1>
         <Avatar className="mt-4 h-[100px] w-[100px]">
           <AvatarImage className="rounded-full" src={editEmployee.avatarSrc} />
           <AvatarFallback>{editEmployee.name[0]}</AvatarFallback>
         </Avatar>
         <div className="w-full mt-4 space-y-2">
-          <Input name="name" value={editEmployee.name} onChange={handleChange} placeholder="Name" />
-          <Input name="email" value={editEmployee.email} onChange={handleChange} placeholder="Email" />
-          <Input name="phone" value={editEmployee.phone} onChange={handleChange} placeholder="Phone" />
-          <Input name="address" value={editEmployee.address} onChange={handleChange} placeholder="Address" />
-          <Input name="jobTitle" value={editEmployee.jobTitle} onChange={handleChange} placeholder="Job Title" />
-          <Input name="department" value={editEmployee.department} onChange={handleChange} placeholder="Department" />
-          <Input name="salary" value={editEmployee.salary} onChange={handleChange} placeholder="Salary" />
-          <Input name="paymentInfo" value={editEmployee.paymentInfo} onChange={handleChange} placeholder="Payment Info" />
+          <Input
+            name="name"
+            value={editEmployee.name}
+            onChange={handleChange}
+            placeholder="Name"
+          />
+          <Input
+            name="email"
+            value={editEmployee.email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+          <Input
+            name="phone"
+            value={editEmployee.phone}
+            onChange={handleChange}
+            placeholder="Phone"
+          />
+          <Input
+            name="address"
+            value={editEmployee.address}
+            onChange={handleChange}
+            placeholder="Address"
+          />
+          <Input
+            name="jobTitle"
+            value={editEmployee.jobTitle}
+            onChange={handleChange}
+            placeholder="Job Title"
+          />
+          <Input
+            name="department"
+            value={editEmployee.department}
+            onChange={handleChange}
+            placeholder="Department"
+          />
+          <Input
+            name="salary"
+            value={editEmployee.salary}
+            onChange={handleChange}
+            placeholder="Salary"
+          />
+          <Input
+            name="paymentInfo"
+            value={editEmployee.paymentInfo}
+            onChange={handleChange}
+            placeholder="Payment Info"
+          />
         </div>
         <div className="mt-4 space-x-2">
-          <Button variant="destructive" onClick={onClose}>Cancel</Button>
+          <Button variant="destructive" onClick={onClose}>
+            Cancel
+          </Button>
           <Button onClick={handleSave}>Save</Button>
         </div>
       </div>
@@ -122,10 +180,23 @@ const ProfileModal: React.FC<{ employee: Employee; onClose: () => void; onSave: 
   );
 };
 
-const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({ employee, onClose }) => {
+const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
+  employee,
+  onClose,
+}) => {
   const [paymentRecords, setPaymentRecords] = useState<PaymentRecord[]>([
-    { date: "2024-01-15", amount: "$5,000", method: "Bank Transfer", status: "Completed" },
-    { date: "2024-02-15", amount: "$5,000", method: "Bank Transfer", status: "Completed" },
+    {
+      date: "2024-01-15",
+      amount: "$5,000",
+      method: "Bank Transfer",
+      status: "Completed",
+    },
+    {
+      date: "2024-02-15",
+      amount: "$5,000",
+      method: "Bank Transfer",
+      status: "Completed",
+    },
     // Add more initial payment records as needed
   ]);
 
@@ -149,9 +220,13 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({ e
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="p-4 bg-white dark:bg-[#0a192f] rounded-lg w-[600px] h-auto flex flex-col items-center">
-        <h1 className="text-xl mb-4 text-black dark:text-white">Manage Payments for {employee.name}</h1>
+        <h1 className="text-xl mb-4 text-black dark:text-white">
+          Manage Payments for {employee.name}
+        </h1>
         <div className="w-full mt-4 space-y-2">
-          <h2 className="text-lg mb-2 text-black dark:text-white">Payment History</h2>
+          <h2 className="text-lg mb-2 text-black dark:text-white">
+            Payment History
+          </h2>
           <Table>
             <TableHeader>
               <TableRow>
@@ -174,14 +249,34 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({ e
           </Table>
         </div>
         <div className="w-full mt-4 space-y-2">
-          <h2 className="text-lg mb-2 text-black dark:text-white">Add Payment</h2>
-          <Input name="date" type="date" value={newPayment.date} onChange={handleChange} placeholder="Date" />
-          <Input name="amount" value={newPayment.amount} onChange={handleChange} placeholder="Amount" />
-          <Input name="method" value={newPayment.method} onChange={handleChange} placeholder="Method" />
+          <h2 className="text-lg mb-2 text-black dark:text-white">
+            Add Payment
+          </h2>
+          <Input
+            name="date"
+            type="date"
+            value={newPayment.date}
+            onChange={handleChange}
+            placeholder="Date"
+          />
+          <Input
+            name="amount"
+            value={newPayment.amount}
+            onChange={handleChange}
+            placeholder="Amount"
+          />
+          <Input
+            name="method"
+            value={newPayment.method}
+            onChange={handleChange}
+            placeholder="Method"
+          />
           <Button onClick={addPayment}>Add Payment</Button>
         </div>
         <div className="mt-4 space-x-2">
-          <Button variant="destructive" onClick={onClose}>Close</Button>
+          <Button variant="destructive" onClick={onClose}>
+            Close
+          </Button>
         </div>
       </div>
     </div>
@@ -192,7 +287,9 @@ const Usertable: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
   const [profileModel, setProfileModel] = useState<boolean>(false);
   const [paymentModel, setPaymentModel] = useState<boolean>(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
 
   const openProfile = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -206,7 +303,9 @@ const Usertable: React.FC = () => {
 
   const saveProfile = (updatedEmployee: Employee) => {
     setEmployees((prevEmployees) =>
-      prevEmployees.map((emp) => (emp.name === updatedEmployee.name ? updatedEmployee : emp))
+      prevEmployees.map((emp) =>
+        emp.name === updatedEmployee.name ? updatedEmployee : emp
+      )
     );
   };
 
@@ -222,13 +321,13 @@ const Usertable: React.FC = () => {
 
   return (
     <div className="p-3">
-      <Table>
+      <Table className="">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead>Job Title</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="lg:visible sm:hidden">Department</TableHead>
+            <TableHead className="hidden sm:table-cell">Job Title</TableHead>
+            <TableHead className="text-right mr-5">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -241,10 +340,11 @@ const Usertable: React.FC = () => {
                 </Avatar>
                 <span>{employee.name}</span>
               </TableCell>
-              <TableCell className="hidden sm:table-cell">{employee.jobTitle}</TableCell>
-              <TableCell className="hidden md:table-cell">{employee.department}</TableCell>
-             
-              <TableCell className="text-right space-x-2">
+              <TableCell className="">{employee.department}</TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {employee.jobTitle}
+              </TableCell>
+              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 items ">
                 <Button onClick={() => openProfile(employee)}>Profile</Button>
                 <Button onClick={() => openPayment(employee)}>Payment</Button>
               </TableCell>
@@ -262,10 +362,7 @@ const Usertable: React.FC = () => {
       )}
 
       {paymentModel && selectedEmployee && (
-        <PaymentModal
-          employee={selectedEmployee}
-          onClose={closePayment}
-        />
+        <PaymentModal employee={selectedEmployee} onClose={closePayment} />
       )}
     </div>
   );
