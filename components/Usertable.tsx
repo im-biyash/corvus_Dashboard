@@ -123,7 +123,7 @@ const ProfileModal: React.FC<{
           <Input
             name="name"
             value={editEmployee.name}
-            onChange={handleChange}
+           readOnly
             placeholder="Name"
           />
           <Input
@@ -223,7 +223,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
         <h1 className="text-xl mb-4 text-black dark:text-white">
           Manage Payments for {employee.name}
         </h1>
-        <div className="w-full mt-4 space-y-2">
+        <div className="w-full mt-4 space-y-2 max-h-64 overflow-y-auto">
           <h2 className="text-lg mb-2 text-black dark:text-white">
             Payment History
           </h2>
@@ -325,7 +325,7 @@ const Usertable: React.FC = () => {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="hidden sm:table-cell">job title</TableHead>
+            <TableHead className="hidden  sm:table-cell">job title</TableHead>
             <TableHead className="hidden sm:table-cell">Department</TableHead>
             <TableHead className="text-right mr-5">Actions</TableHead>
           </TableRow>
@@ -333,14 +333,14 @@ const Usertable: React.FC = () => {
         <TableBody>
           {employees.map((employee, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium flex items-center space-x-3">
+              <TableCell className="font-medium flex items-center  space-x-3">
                 <Avatar>
                   <AvatarImage src={employee.avatarSrc} />
                   <AvatarFallback>{employee.name[0]}</AvatarFallback>
                 </Avatar>
                 <span>{employee.name}</span>
               </TableCell>
-              <TableCell className="hidden sm:table-cell">{employee.jobTitle}</TableCell>
+              <TableCell className="hidden sm:table-cell ">{employee.jobTitle}</TableCell>
               <TableCell className="hidden sm:table-cell">
                 {employee.department}
               </TableCell>
@@ -349,7 +349,7 @@ const Usertable: React.FC = () => {
                 <Button onClick={() => openPayment(employee)}>Payment</Button>
               </TableCell>
             </TableRow>
-          ))}
+          ))} 
         </TableBody>
       </Table>
 
