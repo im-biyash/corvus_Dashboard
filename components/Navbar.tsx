@@ -14,7 +14,7 @@ const Navbar = () => {
           className=" my-1 font- p-2 w-12 bg-white rounded-xl"
           alt="Logo"
         />
-        <h1 className="text-xl font-bold p-1 ml-1">
+        <h1 className="text-xl font-bold p-1">
           Peak Voyage
         </h1>
       </div>
@@ -25,7 +25,7 @@ const Navbar = () => {
           <li>About</li>
         </ul>
       </div>
-      <div className="flex-shrink-0 mr-2">
+      <div className="flex-shrink-0 mr-2 sm:mr-5">
         <ModeToggle />
       </div>
     </nav>

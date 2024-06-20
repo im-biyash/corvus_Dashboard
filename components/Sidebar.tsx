@@ -65,7 +65,7 @@ const Sidebar = () => {
               )}
             </CommandEmpty>
             <CommandGroup>
-              <div className={`flex items-center justify-between ${isSidebarOpen ? "pl-6 pr-2" : "justify-center items-center font-bold  pl-4 text-center"} my-4`}>
+              <div className={`flex items-center text-center justify-between mr-3 ${isSidebarOpen ? "pl-7 pr-3 ml-2" : "justify-center items-center font-bold size-9  pl-4 text-center"} my-4`}>
                 <LuLayoutDashboard />
                 {isSidebarOpen && (
                   <>
