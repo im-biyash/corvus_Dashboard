@@ -59,7 +59,7 @@ const Sidebar = () => {
                 "No results found."
               ) : (
                 <BiMenu
-                  className="text-xl cursor-pointer text-center ml-3"
+                  className="text-xl cursor-pointer text-center ml-4 "
                   onClick={toggleSidebar}
                 />
               )}
@@ -73,7 +73,7 @@ const Sidebar = () => {
                       Dashboard
                     </CommandItem>
                     <BiMenu
-                      className="cursor-pointer hover:bg-slate-600"
+                      className="cursor-pointer dark:hover:bg-slate-600 hover:bg-slate-300"
                       onClick={toggleSidebar}
                     />
                   </>

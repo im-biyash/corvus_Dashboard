@@ -123,7 +123,7 @@ const ProfileModal: React.FC<{
           <Input
             name="name"
             value={editEmployee.name}
-           readOnly
+            readOnly
             placeholder="Name"
           />
           <Input
@@ -197,7 +197,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
       method: "Bank Transfer",
       status: "Completed",
     },
-    // Add more initial payment records as needed
+   
   ]);
 
   const [newPayment, setNewPayment] = useState<PaymentRecord>({
@@ -207,7 +207,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
     status: "Pending",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewPayment((prev) => ({ ...prev, [name]: value }));
   };
@@ -265,12 +265,18 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
             onChange={handleChange}
             placeholder="Amount"
           />
-          <Input
+          <select
             name="method"
             value={newPayment.method}
             onChange={handleChange}
-            placeholder="Method"
-          />
+            className="border rounded p-2 w-full"
+          >
+            <option value="">Select Method</option>
+            <option value="Esewa">Esewa</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Others">Others</option>
+          </select>
           <Button onClick={addPayment}>Add Payment</Button>
         </div>
         <div className="mt-4 space-x-2">
@@ -279,7 +285,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div> 
   );
 };
 
@@ -290,6 +296,7 @@ const Usertable: React.FC = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null
   );
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const openProfile = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -318,38 +325,52 @@ const Usertable: React.FC = () => {
     setPaymentModel(false);
     setSelectedEmployee(null);
   };
+  const filteredEmployees = employees.filter((employee) =>
+    employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="p-3">
+      <Input
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Search by name..."
+        className="mb-3 w-[300px] px-3 py-2 border border-gray-400 rounded-md"
+      />
       <Table className="w-full">
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Name</TableHead>
-            <TableHead className="hidden  sm:table-cell">job title</TableHead>
+          <TableRow >
+            <TableHead className="">Name</TableHead>
+            <TableHead className="hidden sm:table-cell">Job Title</TableHead>
             <TableHead className="hidden sm:table-cell">Department</TableHead>
-            <TableHead className="text-right mr-5">Actions</TableHead>
+            <TableHead className="text-right mr-20 relative right-[50px] ">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {employees.map((employee, index) => (
+        {filteredEmployees.map((employee, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium flex items-center  space-x-3">
-                <Avatar>
+              <TableCell className="  space-x-3  align-middle">
+               <div className="flex items-center gap-3">
+                <Avatar className="flex flex-row items-center gap-2">
                   <AvatarImage src={employee.avatarSrc} />
                   <AvatarFallback>{employee.name[0]}</AvatarFallback>
+                  <span>{employee.name[0]}</span>
                 </Avatar>
                 <span>{employee.name}</span>
+               </div>
               </TableCell>
-              <TableCell className="hidden sm:table-cell ">{employee.jobTitle}</TableCell>
-              <TableCell className="hidden sm:table-cell">
+              <TableCell className="hidden sm:table-cell align-middle">
+                {employee.jobTitle}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell align-middle">
                 {employee.department}
               </TableCell>
-              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 item ">
+              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 item align-middle">
                 <Button onClick={() => openProfile(employee)}>Profile</Button>
                 <Button onClick={() => openPayment(employee)}>Payment</Button>
               </TableCell>
             </TableRow>
-          ))} 
+          ))}
         </TableBody>
       </Table>
 
