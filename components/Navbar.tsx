@@ -2,8 +2,8 @@
 
 import React from "react";
 import { ModeToggle } from "./ModeToggle";
-import Image from "next/image"; // Import Image component from next/image
-import logo from "../assets/logo.png"; // Import the image
+import Image from "next/image"; 
+import logo from "../assets/logo.png"; 
 
 const Navbar = () => {
   return (
@@ -14,7 +14,7 @@ const Navbar = () => {
           className=" my-1 font- p-2 w-12 bg-white rounded-xl"
           alt="Logo"
         />
-        <h1 className="text-xl font-bold p-1">
+        <h1 className="text-xl font-bold p-1 ml-2">
           Peak Voyage
         </h1>
       </div>

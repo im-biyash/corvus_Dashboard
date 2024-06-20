@@ -365,9 +365,9 @@ const Usertable: React.FC = () => {
               <TableCell className="hidden sm:table-cell align-middle">
                 {employee.department}
               </TableCell>
-              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 item align-middle">
-                <Button onClick={() => openProfile(employee)}>Profile</Button>
-                <Button onClick={() => openPayment(employee)}>Payment</Button>
+              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 item ">
+                <Button  size="lg" onClick={() => openProfile(employee)}>Edit</Button>
+                <Button size="lg" onClick={() => openPayment(employee)}>Payment</Button>
               </TableCell>
             </TableRow>
           ))}

@@ -87,9 +87,9 @@ const Sidebar = () => {
                   <FaUser />
                   {isSidebarOpen && (
                     <>
-                      <CommandItem className="flex-grow">Employee</CommandItem>
+                      <CommandItem className="flex-grow ">Employee</CommandItem>
                       {isEmployeeDropdownOpen ? (
-                        <BiChevronUp />
+                        <BiChevronUp  />
                       ) : (
                         <BiChevronDown />
                       )}
