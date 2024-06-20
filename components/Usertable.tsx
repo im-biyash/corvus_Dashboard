@@ -35,7 +35,7 @@ const initialEmployees: Employee[] = [
   {
     name: "Anuj Karn",
     email: "anuj@example.com",
-    phone: "123-456-7890",
+    phone: "9745654746",
     address: "Biratnagar, Nepal",
     jobTitle: "Full stack Developer",
     department: "Manager",
@@ -46,7 +46,7 @@ const initialEmployees: Employee[] = [
   {
     name: "John Doe",
     email: "john.doe@example.com",
-    phone: "234-567-8901",
+    phone: "324230329432",
     address: "Chitwan, Nepal",
     jobTitle: "Backend Developer",
     department: "IT",
@@ -58,7 +58,7 @@ const initialEmployees: Employee[] = [
   {
     name: "Jane Smith",
     email: "jane.smith@example.com",
-    phone: "345-678-9012",
+    phone: "98234324324",
     address: "Pokhara, Nepal",
     jobTitle: "UI/UX Designer",
     department: "Design",
@@ -70,7 +70,7 @@ const initialEmployees: Employee[] = [
   {
     name: "Emily Johnson",
     email: "emily.johnson@example.com",
-    phone: "456-789-0123",
+    phone: "9845951708",
     address: "London, UK",
     jobTitle: "Marketing Specialist",
     department: "Marketing",
@@ -81,7 +81,7 @@ const initialEmployees: Employee[] = [
   {
     name: "Michael Brown",
     email: "michael.brown@example.com",
-    phone: "567-890-1234",
+    phone: "983234324",
     address: "New York, USA",
     jobTitle: "Sales Manager",
     department: "Sales",
