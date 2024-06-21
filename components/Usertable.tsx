@@ -39,12 +39,20 @@ const generateDummyEmployees = (): Employee[] => {
     "HR Manager",
   ];
 
+  const randomNames = [
+    "John", "Emma", "Michael", "Sophia", "William", "Olivia", "James", "Amelia",
+    "Benjamin", "Charlotte", "Daniel", "Isabella", "Matthew", "Mia", "Logan", "Evelyn",
+    "Alexander", "Harper", "David", "Abigail", "Joseph", "Emily", "Jackson", "Elizabeth",
+    "Samuel", "Ava", "Elijah", "Grace", "Gabriel", "Chloe", "Joshua", "Ella"
+  ];
+
   for (let i = 1; i <= 100; i++) {
     const randomIndex = Math.floor(Math.random() * departments.length);
     const randomJobIndex = Math.floor(Math.random() * jobTitles.length);
+    const randomNameIndex = Math.floor(Math.random() * randomNames.length);
 
     const employee: Employee = {
-      name: `Employee ${i}`,
+      name: randomNames[randomNameIndex],
       email: `employee${i}@example.com`,
       phone: `${Math.floor(Math.random() * 9000000000) + 1000000000}`,
       address: `Address ${i}`,
@@ -175,7 +183,9 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
     status: "Pending",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setNewPayment((prev) => ({ ...prev, [name]: value }));
   };
@@ -195,26 +205,30 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
           <h2 className="text-lg mb-2 text-black dark:text-white">
             Payment History
           </h2>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paymentRecords.map((record, index) => (
-                <TableRow key={index}>
-                  <TableCell>{record.date}</TableCell>
-                  <TableCell>{record.amount}</TableCell>
-                  <TableCell>{record.method}</TableCell>
-                  <TableCell>{record.status}</TableCell>
+          {paymentRecords.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Method</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {paymentRecords.map((record, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{record.date}</TableCell>
+                    <TableCell>{record.amount}</TableCell>
+                    <TableCell>{record.method}</TableCell>
+                    <TableCell>{record.status}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <p className="text-gray-500">No payment records found.</p>
+          )}
         </div>
         <div className="w-full mt-4 space-y-2">
           <h2 className="text-lg mb-2 text-black dark:text-white">
@@ -253,12 +267,14 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
           </Button>
         </div>
       </div>
-    </div> 
+    </div>
   );
 };
 
 const Usertable: React.FC = () => {
-  const [employees, setEmployees] = useState(generateDummyEmployees);
+  const [employees, setEmployees] = useState<Employee[]>(
+    generateDummyEmployees()
+  );
   const [profileModel, setProfileModel] = useState(false);
   const [paymentModel, setPaymentModel] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
@@ -267,6 +283,11 @@ const Usertable: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5); // Number of employees per page
+  const [sortField, setSortField] = useState<keyof Employee>("name"); // Default field to sort
+  const [ascending, setAscending] = useState(true); // Sort direction
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
+    null
+  ); // State for department filter
 
   const openProfile = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -296,9 +317,30 @@ const Usertable: React.FC = () => {
     );
   };
 
-  const filteredEmployees = employees.filter((employee) =>
-    employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // Filtering employees based on search query and selected department
+  const filteredEmployees = employees.filter(
+    (employee) =>
+      employee.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (selectedDepartment === null ||
+        employee.department === selectedDepartment)
   );
+
+  // Sorting function
+  const sortEmployees = () => {
+    const sortedEmployees = [...filteredEmployees].sort((a, b) => {
+      const fieldA = a[sortField].toUpperCase();
+      const fieldB = b[sortField].toUpperCase();
+      if (fieldA < fieldB) return ascending ? -1 : 1;
+      if (fieldA > fieldB) return ascending ? 1 : -1;
+      return 0;
+    });
+    return sortedEmployees;
+  };
+
+  // Toggle sorting direction
+  const toggleSortDirection = () => {
+    setAscending((prevAscending) => !prevAscending);
+  };
 
   // Pagination logic
   const totalEmployees = filteredEmployees.length;
@@ -318,57 +360,143 @@ const Usertable: React.FC = () => {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  const handleDepartmentFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const department = e.target.value;
+    setSelectedDepartment(department === "all" ? null : department);
+  };
+
   return (
     <div className="p-3">
-      <Input
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search by name..."
-        className="mb-3 w-[300px] px-3 py-2 border border-gray-400 rounded-md"
-      />
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead className="hidden sm:table-cell">Job Title</TableHead>
-            <TableHead className="hidden sm:table-cell">Department</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredEmployees
-            .slice((currentPage - 1) * pageSize, currentPage * pageSize)
-            .map((employee, index) => (
-              <TableRow key={index}>
-                <TableCell className="align-middle">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="flex flex-row items-center gap-2">
-                      <AvatarImage src={employee.avatarSrc} />
-                      <AvatarFallback>{employee.name[0]}</AvatarFallback>
-                      <span>{employee.name[0]}</span>
-                    </Avatar>
-                    <span>{employee.name}</span>
-                  </div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell align-middle">
-                  {employee.jobTitle}
-                </TableCell>
-                <TableCell className="hidden sm:table-cell align-middle">
-                  {employee.department}
-                </TableCell>
-                <TableCell className="flex justify-end gap-2">
-                  <Button size="lg" onClick={() => openProfile(employee)}>
-                    Edit
-                  </Button>
-                  <Button size="lg" onClick={() => openPayment(employee)}>
-                    Payment
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
+        <div className="mb-3 sm:mb-0 sm:mr-3">
+          <Input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by name..."
+            className="w-full sm:w-[300px] px-3 py-2 border border-gray-400 rounded-md"
+          />
+        </div>
+        <div className="mb-3 sm:mb-0 sm:mr-3">
+          <select
+            value={selectedDepartment || "all"}
+            onChange={handleDepartmentFilterChange}
+            className="w-full sm:w-[200px] px-3 py-2 border border-gray-400 rounded-md"
+          >
+            <option value="all">All Departments</option>
+            <option value="IT">IT</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Sales">Sales</option>
+            <option value="Design">Design</option>
+            <option value="Operations">Operations</option>
+          </select>
+        </div>
+        <div>
+          <Button onClick={toggleSortDirection}>
+            {ascending ? "Sort Z-A" : "Sort A-Z"}
+          </Button>
+        </div>
+      </div>
 
+      {filteredEmployees.length === 0 ? (
+        <p className="text-gray-500 text-center">No employees found.</p>
+      ) : (
+        <>
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead className="hidden sm:table-cell">Job Title</TableHead>
+                <TableHead className="hidden sm:table-cell">Department</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sortEmployees()
+                .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+                .map((employee, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="align-middle">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="flex flex-row items-center gap-2">
+                          <AvatarImage src={employee.avatarSrc} />
+                          <AvatarFallback>{employee.name[0]}</AvatarFallback>
+                          <span>{employee.name[0]}</span>
+                        </Avatar>
+                        <span>{employee.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell align-middle">
+                      {employee.jobTitle}
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell align-middle">
+                      {employee.department}
+                    </TableCell>
+                    <TableCell className="flex justify-end gap-2">
+                      <Button size="lg" onClick={() => openProfile(employee)}>
+                        Edit
+                      </Button>
+                      <Button size="lg" onClick={() => openPayment(employee)}>
+                        Payment
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+
+          {/* Pagination controls */}
+          {totalEmployees > pageSize && (
+            <div className="mt-3 flex justify-center items-center space-x-2">
+              <Button
+                className="px-2 py-1"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                {"<"}
+              </Button>
+              {startPage > 1 && (
+                <Button className="px-2 py-1 w-8" onClick={() => paginate(1)}>
+                  1
+                </Button>
+              )}
+              {startPage > 2 && <span className="mx-1">...</span>}
+              {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
+                <Button
+                  key={startPage + index}
+                  className={`px-2 py-1 mx-1 w-8 ${
+                    currentPage === startPage + index
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200"
+                  }`}
+                  onClick={() => paginate(startPage + index)}
+                >
+                  {startPage + index}
+                </Button>
+              ))}
+              {endPage < totalPages - 2 && <span className="mx-1">...</span>}
+              {endPage < totalPages && (
+                <Button
+                  className="px-2 py-1 w-8"
+                  onClick={() => paginate(totalPages)}
+                >
+                  {totalPages}
+                </Button>
+              )}
+              <Button
+                className="px-2 py-1 w-8"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                {">"}
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Profile and Payment modals */}
       {profileModel && selectedEmployee && (
         <ProfileModal
           employee={selectedEmployee}
@@ -380,45 +508,6 @@ const Usertable: React.FC = () => {
       {paymentModel && selectedEmployee && (
         <PaymentModal employee={selectedEmployee} onClose={closePayment} />
       )}
-
-      {/* Pagination controls */}
-      <div className="mt-3 flex justify-center items-center space-x-4">
-        <Button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          {"<"}
-        </Button>
-        {startPage > 1 && (
-          <Button onClick={() => paginate(1)}>1</Button>
-        )}
-        {startPage > 2 && (
-          <span className="mx-1">...</span>
-        )}
-        {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
-          <Button
-            key={startPage + index}
-            onClick={() => paginate(startPage + index)}
-            className={`mx-1 ${
-              currentPage === startPage + index ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-          >
-            {startPage + index}
-          </Button>
-        ))}
-        {endPage < totalPages - 2 && (
-          <span className="mx-1">...</span>
-        )}
-        {endPage < totalPages && (
-          <Button onClick={() => paginate(totalPages)}>{totalPages}</Button>
-        )}
-        <Button
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          {">"}
-        </Button>
-      </div>
     </div>
   );
 };
