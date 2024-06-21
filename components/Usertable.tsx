@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"; // Assuming there's an Input component
+import { Input } from "@/components/ui/input";
 
 interface Employee {
   name: string;
@@ -24,73 +23,43 @@ interface Employee {
   avatarSrc: string;
 }
 
-interface PaymentRecord {
-  date: string;
-  amount: string;
-  method: string;
-  status: string;
-}
+const generateDummyEmployees = (): Employee[] => {
+  const dummyEmployees: Employee[] = [];
+  const departments = ["IT", "Marketing", "Sales", "Design", "Operations"];
+  const jobTitles = [
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "UI/UX Designer",
+    "Data Analyst",
+    "Marketing Specialist",
+    "Sales Manager",
+    "Operations Manager",
+    "Product Manager",
+    "HR Manager",
+  ];
 
-const initialEmployees: Employee[] = [
-  {
-    name: "Anuj Karn",
-    email: "anuj@example.com",
-    phone: "9745654746",
-    address: "Biratnagar, Nepal",
-    jobTitle: "Full stack Developer",
-    department: "Manager",
-    salary: "$120,000",
-    paymentInfo: "Bank Account - XXXX1234",
-    avatarSrc: "https://github.com/shadcn.png",
-  },
-  {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "324230329432",
-    address: "Chitwan, Nepal",
-    jobTitle: "Backend Developer",
-    department: "IT",
-    salary: "$100,000",
-    paymentInfo: "Bank Account - XXXX5678",
-    avatarSrc:
-      "https://avatars.design/wp-content/uploads/2022/09/5business-team-employee-personal-avatar.png",
-  },
-  {
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "98234324324",
-    address: "Pokhara, Nepal",
-    jobTitle: "UI/UX Designer",
-    department: "Design",
-    salary: "$90,000",
-    paymentInfo: "Bank Account - XXXX9012",
-    avatarSrc:
-      "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1718183707~exp=1718187307~hmac=3900846836b9d435f655d19d1cd0379b4350cbacdcf3bcda9fec5befdc3335cb&w=740",
-  },
-  {
-    name: "Emily Johnson",
-    email: "emily.johnson@example.com",
-    phone: "9845951708",
-    address: "London, UK",
-    jobTitle: "Marketing Specialist",
-    department: "Marketing",
-    salary: "$80,000",
-    paymentInfo: "Bank Account - XXXX3456",
-    avatarSrc: "https://github.com/shadcn.png",
-  },
-  {
-    name: "Michael Brown",
-    email: "michael.brown@example.com",
-    phone: "983234324",
-    address: "New York, USA",
-    jobTitle: "Sales Manager",
-    department: "Sales",
-    salary: "$110,000",
-    paymentInfo: "Bank Account - XXXX7890",
-    avatarSrc:
-      "https://media.istockphoto.com/id/1476170969/photo/portrait-of-young-man-ready-for-job-business-concept.jpg?s=2048x2048&w=is&k=20&c=yif473DFhN451o-tNC1tASFFoP5QTOYcqS26dhEbv6U=",
-  },
-];
+  for (let i = 1; i <= 100; i++) {
+    const randomIndex = Math.floor(Math.random() * departments.length);
+    const randomJobIndex = Math.floor(Math.random() * jobTitles.length);
+
+    const employee: Employee = {
+      name: `Employee ${i}`,
+      email: `employee${i}@example.com`,
+      phone: `${Math.floor(Math.random() * 9000000000) + 1000000000}`,
+      address: `Address ${i}`,
+      jobTitle: jobTitles[randomJobIndex],
+      department: departments[randomIndex],
+      salary: `$${Math.floor(Math.random() * 100000) + 50000}`,
+      paymentInfo: `Bank Account - XXXX${Math.floor(Math.random() * 9000) + 1000}`,
+      avatarSrc: `https://randomuser.me/api/portraits/men/${i}.jpg`,
+    };
+
+    dummyEmployees.push(employee);
+  }
+
+  return dummyEmployees;
+};
 
 const ProfileModal: React.FC<{
   employee: Employee;
@@ -184,7 +153,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
   employee,
   onClose,
 }) => {
-  const [paymentRecords, setPaymentRecords] = useState<PaymentRecord[]>([
+  const [paymentRecords, setPaymentRecords] = useState([
     {
       date: "2024-01-15",
       amount: "$5,000",
@@ -197,10 +166,9 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
       method: "Bank Transfer",
       status: "Completed",
     },
-   
   ]);
 
-  const [newPayment, setNewPayment] = useState<PaymentRecord>({
+  const [newPayment, setNewPayment] = useState({
     date: "",
     amount: "",
     method: "",
@@ -290,13 +258,15 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
 };
 
 const Usertable: React.FC = () => {
-  const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
-  const [profileModel, setProfileModel] = useState<boolean>(false);
-  const [paymentModel, setPaymentModel] = useState<boolean>(false);
+  const [employees, setEmployees] = useState(generateDummyEmployees);
+  const [profileModel, setProfileModel] = useState(false);
+  const [paymentModel, setPaymentModel] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null
   );
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5); // Number of employees per page
 
   const openProfile = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -308,14 +278,6 @@ const Usertable: React.FC = () => {
     setSelectedEmployee(null);
   };
 
-  const saveProfile = (updatedEmployee: Employee) => {
-    setEmployees((prevEmployees) =>
-      prevEmployees.map((emp) =>
-        emp.name === updatedEmployee.name ? updatedEmployee : emp
-      )
-    );
-  };
-
   const openPayment = (employee: Employee) => {
     setSelectedEmployee(employee);
     setPaymentModel(true);
@@ -325,9 +287,36 @@ const Usertable: React.FC = () => {
     setPaymentModel(false);
     setSelectedEmployee(null);
   };
+
+  const saveProfile = (updatedEmployee: Employee) => {
+    setEmployees((prevEmployees) =>
+      prevEmployees.map((emp) =>
+        emp.name === updatedEmployee.name ? updatedEmployee : emp
+      )
+    );
+  };
+
   const filteredEmployees = employees.filter((employee) =>
     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Pagination logic
+  const totalEmployees = filteredEmployees.length;
+  const totalPages = Math.ceil(totalEmployees / pageSize);
+
+  // Constants for pagination customization
+  const MAX_VISIBLE_PAGES = 5; // Maximum number of page buttons visible
+  const PAGES_TO_SHOW = 3; // Number of pages to show before and after ellipsis
+
+  // Calculate the range of pages to display
+  let startPage = Math.max(1, currentPage - PAGES_TO_SHOW);
+  let endPage = Math.min(totalPages, startPage + MAX_VISIBLE_PAGES - 1);
+
+  if (endPage - startPage < MAX_VISIBLE_PAGES - 1) {
+    startPage = Math.max(1, endPage - MAX_VISIBLE_PAGES + 1);
+  }
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="p-3">
@@ -339,38 +328,44 @@ const Usertable: React.FC = () => {
       />
       <Table className="w-full">
         <TableHeader>
-          <TableRow >
-            <TableHead className="">Name</TableHead>
+          <TableRow>
+            <TableHead>Name</TableHead>
             <TableHead className="hidden sm:table-cell">Job Title</TableHead>
             <TableHead className="hidden sm:table-cell">Department</TableHead>
-            <TableHead className="text-right mr-20 relative right-[50px] ">Actions</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-        {filteredEmployees.map((employee, index) => (
-            <TableRow key={index}>
-              <TableCell className="  space-x-3  align-middle">
-               <div className="flex items-center gap-3">
-                <Avatar className="flex flex-row items-center gap-2">
-                  <AvatarImage src={employee.avatarSrc} />
-                  <AvatarFallback>{employee.name[0]}</AvatarFallback>
-                  <span>{employee.name[0]}</span>
-                </Avatar>
-                <span>{employee.name}</span>
-               </div>
-              </TableCell>
-              <TableCell className="hidden sm:table-cell align-middle">
-                {employee.jobTitle}
-              </TableCell>
-              <TableCell className="hidden sm:table-cell align-middle">
-                {employee.department}
-              </TableCell>
-              <TableCell className="lg:flex lg:flex-row lg:justify-end lg:gap-2 sm:gap-5 flex flex-col gap-2 item ">
-                <Button  size="lg" onClick={() => openProfile(employee)}>Edit</Button>
-                <Button size="lg" onClick={() => openPayment(employee)}>Payment</Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {filteredEmployees
+            .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+            .map((employee, index) => (
+              <TableRow key={index}>
+                <TableCell className="align-middle">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="flex flex-row items-center gap-2">
+                      <AvatarImage src={employee.avatarSrc} />
+                      <AvatarFallback>{employee.name[0]}</AvatarFallback>
+                      <span>{employee.name[0]}</span>
+                    </Avatar>
+                    <span>{employee.name}</span>
+                  </div>
+                </TableCell>
+                <TableCell className="hidden sm:table-cell align-middle">
+                  {employee.jobTitle}
+                </TableCell>
+                <TableCell className="hidden sm:table-cell align-middle">
+                  {employee.department}
+                </TableCell>
+                <TableCell className="flex justify-end gap-2">
+                  <Button size="lg" onClick={() => openProfile(employee)}>
+                    Edit
+                  </Button>
+                  <Button size="lg" onClick={() => openPayment(employee)}>
+                    Payment
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
 
@@ -385,6 +380,45 @@ const Usertable: React.FC = () => {
       {paymentModel && selectedEmployee && (
         <PaymentModal employee={selectedEmployee} onClose={closePayment} />
       )}
+
+      {/* Pagination controls */}
+      <div className="mt-3 flex justify-center items-center space-x-4">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          {"<"}
+        </Button>
+        {startPage > 1 && (
+          <Button onClick={() => paginate(1)}>1</Button>
+        )}
+        {startPage > 2 && (
+          <span className="mx-1">...</span>
+        )}
+        {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
+          <Button
+            key={startPage + index}
+            onClick={() => paginate(startPage + index)}
+            className={`mx-1 ${
+              currentPage === startPage + index ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            {startPage + index}
+          </Button>
+        ))}
+        {endPage < totalPages - 2 && (
+          <span className="mx-1">...</span>
+        )}
+        {endPage < totalPages && (
+          <Button onClick={() => paginate(totalPages)}>{totalPages}</Button>
+        )}
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          {">"}
+        </Button>
+      </div>
     </div>
   );
 };
