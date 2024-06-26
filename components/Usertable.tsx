@@ -33,7 +33,7 @@ const generateDummyEmployees = (): Employee[] => {
     "UI/UX Designer",
     "Data Analyst",
     "Marketing Specialist",
-    "Sales Manager",
+    "Sales Manager1",
     "Operations Manager",
     "Product Manager",
     "HR Manager",
