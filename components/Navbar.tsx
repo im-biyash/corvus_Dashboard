@@ -15,7 +15,7 @@ const Navbar = () => {
           alt="Logo"
         />
         <h1 className="text-xl font-bold p-1 ml-2">
-          Peak Voyage
+          Peak Voyage 
         </h1>
       </div>
       <div className="flex-grow flex justify-center">
@@ -23,6 +23,8 @@ const Navbar = () => {
           
           <li>Home</li>
           <li>About</li>
+          <li>About</li>
+          <li>Contact</li>
         </ul>
       </div>
       <div className="flex-shrink-0 mr-2 sm:mr-5">
