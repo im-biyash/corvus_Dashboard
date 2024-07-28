@@ -23,7 +23,7 @@ const Navbar = () => {
           
           <li>Home</li>
           <li>About</li>
-          <li>About</li>
+          <li>Services</li>
           <li>Contact</li>
         </ul>
       </div>
