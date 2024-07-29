@@ -435,7 +435,7 @@ const Usertable: React.FC = () => {
                     </TableCell>
                     <TableCell className="flex justify-end gap-2">
                       <Button size="lg" onClick={() => openProfile(employee)}>
-                        Edit
+                        Edit profile
                       </Button>
                       <Button size="lg" onClick={() => openPayment(employee)}>
                         Payment
