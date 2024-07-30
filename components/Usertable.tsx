@@ -388,6 +388,7 @@ const Usertable: React.FC = () => {
             <option value="IT">IT</option>
             <option value="Marketing">Marketing</option>
             <option value="Sales">Sales</option>
+            <option value="Sales">Sales</option>
             <option value="Design">Design</option>
             <option value="Operations">Operations</option>
           </select>
@@ -409,7 +410,7 @@ const Usertable: React.FC = () => {
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden sm:table-cell">Job Title</TableHead>
                 <TableHead className="hidden sm:table-cell">Department</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="text-right">Actions .</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
