@@ -370,7 +370,7 @@ const Usertable: React.FC = () => {
   return (
     <div className="p-3">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
-        <div className="mb-3 sm:mb-0 sm:mr-3">
+        <div className="mb-3 sm:mb-0 sm:mr-4">
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -389,6 +389,7 @@ const Usertable: React.FC = () => {
             <option value="Marketing">Marketing</option>
             <option value="Sales">Sales</option>
             <option value="Sales">Sales</option>
+            
             <option value="Design">Design</option>
             <option value="Operations">Operations</option>
           </select>
