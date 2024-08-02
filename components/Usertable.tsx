@@ -375,7 +375,7 @@ const Usertable: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name..."
-            className="w-full sm:w-[300px] px-3 py-2 border border-gray-400 rounded-md"
+            className="w-full sm:w-[300px] px-3 py-2 border border-gray-500 rounded-md"
           />
         </div>
         <div className="mb-3 sm:mb-0 sm:mr-3">
