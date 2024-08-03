@@ -369,8 +369,8 @@ const Usertable: React.FC = () => {
 
   return (
     <div className="p-3">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
-        <div className="mb-3 sm:mb-0 sm:mr-4">
+      <div className="flex flex-col sm:flex-col sm:justify-between sm:items-center mb-3">
+        <div className="mb-3 sm:mb-0 sm:mr-3">
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
