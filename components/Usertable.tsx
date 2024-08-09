@@ -196,9 +196,9 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40">
       <div className="p-4 bg-white dark:bg-[#0a192f] rounded-lg w-[600px] h-auto flex flex-col items-center">
-        <h1 className="text-xl mb-4 text-black dark:text-white">
+        <h1 className="text-2xl mb-5 text-black dark:text-white">
           Manage Payments for {employee.name}
         </h1>
         <div className="w-full mt-4 space-y-2 max-h-64 overflow-y-auto">
