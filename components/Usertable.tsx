@@ -257,6 +257,7 @@ const PaymentModal: React.FC<{ employee: Employee; onClose: () => void }> = ({
             <option value="Esewa">Esewa</option>
             <option value="Bank Transfer">Bank Transfer</option>
             <option value="Credit Card">Credit Card</option>
+            <option value="Credit Card">Pay pal</option>
             <option value="Others">Others</option>
           </select>
           <Button onClick={addPayment}>Add Payment</Button>
